@@ -26,7 +26,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _defaultBackGestureEnabled = YES;
+        _defaultBackGestureEnabled = NO;
         _reverseTransitionsForViewControllers = [NSMapTable weakToStrongObjectsMapTable];
     }
     return self;
