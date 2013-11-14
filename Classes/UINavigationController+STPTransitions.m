@@ -5,16 +5,14 @@
 @implementation UINavigationController (STPTransitions)
 
 - (void)pushViewController:(UIViewController *)viewController
-                  animated:(BOOL)animated
            usingTransition:(STPTransition *)transition {
     [STPTransitionCenter sharedInstance].nextTransition = transition;
-    [self pushViewController:viewController animated:animated];
+    [self pushViewController:viewController animated:YES];
 }
 
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated
-                                usingTransition:(STPTransition *)transition {
+- (UIViewController *)popViewControllerUsingTransition:(STPTransition *)transition {
     [STPTransitionCenter sharedInstance].nextTransition = transition;
-    return [self popViewControllerAnimated:animated];
+    return [self popViewControllerAnimated:YES];
 }
 
 @end

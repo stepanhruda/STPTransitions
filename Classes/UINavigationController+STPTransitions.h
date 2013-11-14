@@ -5,11 +5,9 @@
 @interface UINavigationController (STPTransitions)
 
 - (void)pushViewController:(UIViewController *)viewController
-                  animated:(BOOL)animated
            usingTransition:(STPTransition *)transition;
 
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated
-                                usingTransition:(STPTransition *)transition;
+- (UIViewController *)popViewControllerUsingTransition:(STPTransition *)transition;
 
 
 @end
