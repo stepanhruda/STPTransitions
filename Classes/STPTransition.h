@@ -22,6 +22,8 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 @property (nonatomic, copy) void (^onAnimationEnded)(BOOL transitionCompleted);
 
 @property (nonatomic, readonly) BOOL wasTriggeredInteractively;
+@property (nonatomic, assign, getter = isReversible) BOOL reversible;
+@property (nonatomic, assign) BOOL reverse;
 
 - (CGFloat)completionForGesturePoint:(CGPoint)point;
 

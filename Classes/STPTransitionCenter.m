@@ -26,7 +26,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _defaultBackGestureEnabled = YES;
+        _defaultBackGestureEnabled = NO;
         _reverseTransitionsForViewControllers = [NSMapTable weakToStrongObjectsMapTable];
     }
     return self;
@@ -156,13 +156,20 @@
                [self.reverseTransitionsForViewControllers objectForKey:fromViewController]) {
 
         transition = [self.reverseTransitionsForViewControllers objectForKey:fromViewController];
+        if (transition.isReversible) {
+            transition.reverse = YES;
+        }
 
     }
 
     [self messageViewControllersForOperation:operation fromViewController:fromViewController toViewController:toViewController transition:transition];
 
     if (operation == STPTransitionOperationPushPresent) {
-        [self.reverseTransitionsForViewControllers setObject:transition.reverseTransition forKey:toViewController];
+        if (transition.reverseTransition) {
+            [self.reverseTransitionsForViewControllers setObject:transition.reverseTransition forKey:toViewController];
+        } else if (transition.isReversible) {
+            [self.reverseTransitionsForViewControllers setObject:transition forKey:toViewController];
+        }
     }
     return transition;
 }
