@@ -1,6 +1,8 @@
+
 #import "STPTransition.h"
 
 #import "STPTransitionCenter.h"
+#import "STPViewTransitionAnimation.h"
 
 @interface STPTransition ()
 
@@ -47,6 +49,21 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     if (self.animateAdHocInContext) {
         self.animateAdHocInContext(transitionContext);
+    } else if (self.viewTransitionAnimationClass) {
+
+        UIView *container = [transitionContext containerView];
+
+        UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+        UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+
+
+        [self.viewTransitionAnimationClass transitionFromView:fromVC.view
+                                                       toView:toVC.view
+                                                 asSubviewsOf:container
+                                        usingReverseAnimation:self.reverse
+                                                 onCompletion:^(BOOL finished){
+                                                     [transitionContext completeTransition:finished];
+                                                 }];
     }
 }
 

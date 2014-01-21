@@ -1,15 +1,16 @@
-#import <UIKit/UIKit.h>
-
 typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
     STPTransitionOperationNone = 0,
     STPTransitionOperationPushPresent,
     STPTransitionOperationPopDismiss
 };
 
+@protocol STPViewTransitionAnimation;
+
 @interface STPTransition : UIPercentDrivenInteractiveTransition <UIViewControllerAnimatedTransitioning>
 
 + (instancetype)transitionWithAnimation:(void (^)(id<UIViewControllerContextTransitioning> transitionContext))animateAdHoc;
 
+@property (nonatomic, strong) Class<STPViewTransitionAnimation> viewTransitionAnimationClass;
 @property (nonatomic, strong) STPTransition *reverseTransition;
 @property (nonatomic, assign) NSTimeInterval transitionDuration;
 @property (nonatomic, assign, getter = isInteractive) BOOL interactive;
