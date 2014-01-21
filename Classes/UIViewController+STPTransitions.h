@@ -15,6 +15,11 @@
                            completion:(void (^)(void))completion
                       usingTransition:(STPTransition *)transition;
 
+- (void)transitionFromViewController:(UIViewController *)fromViewController
+                    toViewController:(UIViewController *)toViewController
+                     usingTransition:(STPTransition *)transition;
+
+
 - (void)willPerformTransitionAsOuterViewController:(STPTransition *)transition;
 - (void)willPerformTransitionAsInnerViewController:(STPTransition *)transition;
 
