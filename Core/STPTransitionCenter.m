@@ -183,8 +183,10 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
                                               fromViewController:fromViewController];
     if (transition) {
         if (operation == STPTransitionOperationPushPresent) {
-            [self setNextPopOrDismissTransition:transition fromViewController:toViewController];
             [self setNextPushOrPresentTransition:nil fromViewController:fromViewController];
+            if (transition.reverseTransition) {
+                [self setNextPopOrDismissTransition:transition.reverseTransition fromViewController:toViewController];
+            }
         } else {
             [self removeAllTransitionsForViewController:fromViewController];
             if (operation == STPTransitionOperationPopDismiss) {

@@ -21,7 +21,7 @@
 - (void)animateFromView:(UIView *)fromView
                  toView:(UIView *)toView
         inContainerView:(UIView *)containerView
-           onCompletion:(void (^)(BOOL))onCompletion {
+    executeOnCompletion:(void (^)(BOOL))onCompletion {
     if (self.animationBlock) {
         self.animationBlock(fromView, toView, containerView, onCompletion);
     }

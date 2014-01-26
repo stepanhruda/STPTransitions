@@ -19,9 +19,9 @@
 - (void)animateFromView:(UIView *)fromView
                  toView:(UIView *)toView
         inContainerView:(UIView *)containerView
-           onCompletion:(void (^)(BOOL))onCompletion {
+    executeOnCompletion:(void (^)(BOOL))onCompletion {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"Override -animateFromView:toView:inContainerView:onCompletion: in your subclass."
+                                   reason:@"Override -animateFromView:toView:inContainerView:executeOnCompletion: in your subclass."
                                  userInfo:nil];
 }
 
@@ -59,7 +59,7 @@
     [self animateFromView:fromVC.view
                    toView:toVC.view
           inContainerView:container
-             onCompletion:^(BOOL finished) { [transitionContext completeTransition:finished]; }];
+      executeOnCompletion:^(BOOL finished) { [transitionContext completeTransition:finished]; }];
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {
