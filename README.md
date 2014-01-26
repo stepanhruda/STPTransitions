@@ -13,9 +13,11 @@ Perhaps you watched the [2013 WWDC talk](http://asciiwwdc.com/2013/sessions/218)
 * Child view controller transitions
 * Modal view controller transitions
 * Navigation controller transitions
-* Interactive transitions
 * Unified, simple API
 
+In the works:
+
+* Full interactive transition support
 
 ## Usage
 
