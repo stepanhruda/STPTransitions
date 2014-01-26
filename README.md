@@ -96,9 +96,7 @@ Now simply present and dismiss view controllers using:
 
 To maintain thin view controllers and a nicely separated codebase, you probably don't want to keep your transition animation code in the view controller itself. It also allows for the transition to be reused. You achieve both of these goals by subclassing `STPTransition`.
 
-```
-// STPTransition subclass example
-```
+See the [example project](Example) for a hands-on code example.
 
 ### Reverse transitions
 
