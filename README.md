@@ -102,7 +102,7 @@ To maintain thin view controllers and a nicely separated codebase, you probably 
 
 ### Reverse transitions
 
-When pushing or presenting a view controller, you can specify which transition should happen when doing the respective returning operation (i.e. pop or dismiss). Simply assign the transition object to `reverseTransition`.
+When pushing or presenting a view controller, you can specify which transition should happen when the returning (i.e. pop or dismiss) operation takes place. To do that, simply assign the transition object to be used to `reverseTransition`.
 
 This greatly helps decoupling, because the pushed/presented controller doesn't have to know anything about how it's being shown.
 
@@ -122,25 +122,17 @@ Note: This does **not** mean the transition is interactive (e.g. follows users f
 
 ### Interactive transitions
 
+TODO: Interactive transitions aren't fully supported yet.
+
 1. Set the `interactive` property to `YES`.
 2. Assign `gestureRecognizer` that is going to track the progress.
-3. Optional: Implement `interactiveGesturePercentageCompletionForPoint:` in your subclass.
-
-TODO: more here
+3. Implement `interactiveGesturePercentageCompletionForPoint:` in your subclass.
 
 Note: An interactive transition doesn't necessarily need to be _triggered_ interactively, e.g. it can be triggered by a button and happen non-interactively. The `wasTriggeredInteractively` property informs about the way it was triggered.
 
 ## Included transitions
 
-These transitions are included in the library by default:
-
-* move right
-* move left
-* move up
-* move down
-* push right (similar to iOS 7 navigation controller's transition, but has support for transparent views)
-* object push right?
-* step by step reveal
+If you'd like the library to include some configurable, often used transitions by default, voice your opinion in the Issues. Contributions are also welcome.
 
 ## FAQ
 
