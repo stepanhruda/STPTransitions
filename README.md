@@ -100,7 +100,9 @@ To maintain thin view controllers and a nicely separated codebase, you probably 
 
 ### Reverse transitions
 
-When pushing or presenting a view controller, you can specify which transition should happen when doing the respective returning operation (i.e. pop or dismiss). Simply assign the transition object to `reverseTransition`. This greatly helps decoupling, because the pushed/presented controller doesn't have to know anything about how it's being shown.
+When pushing or presenting a view controller, you can specify which transition should happen when doing the respective returning operation (i.e. pop or dismiss). Simply assign the transition object to `reverseTransition`.
+
+This greatly helps decoupling, because the pushed/presented controller doesn't have to know anything about how it's being shown.
 
 _Pro tip:_ Just assign `reverseTransition` to be a new instance of the same class you just created for the push/present. See below on how to easily handle both animations in one class.
 
@@ -145,7 +147,7 @@ A: Subclass your delegate from `STPTransitionCenter` and use your own instance i
   
 ---
 
-Created by [Stepan Hruda](https://twitter.com/stepanhruda), if you follow him on Twitter, he's gonna have a good time.
+Created by [Stepan Hruda](https://twitter.com/stepanhruda). If you follow him on Twitter, he's gonna have a good time.
 
 Thanks goes to [Josh Vickery](https://twitter.com/vickeryj) and [ShopKeep POS](http://www.shopkeep.com) for contributions and feedback.
 
