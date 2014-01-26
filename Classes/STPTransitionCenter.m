@@ -3,14 +3,26 @@
 #import "STPTransition.h"
 #import "UIViewController+STPTransitions.h"
 
+typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
+    STPTransitionOperationNone = 0,
+    STPTransitionOperationPushPresent,
+    STPTransitionOperationPopDismiss
+};
+
 @interface STPTransitionCenter ()
 
-@property (nonatomic, strong) NSMapTable *reverseTransitionsForViewControllers;
+@property (nonatomic, strong) NSMapTable *nextTransitionsForFromControllers;
 
 @end
 
 @implementation STPTransitionCenter
 
+#pragma mark - Public Interface
+
+- (void)setNextTransition:(STPTransition *)transition
+    forFromViewController:(UIViewController *)controller {
+    [self.nextTransitionsForFromControllers setObject:transition forKey:controller];
+}
 
 #pragma mark - Object Lifecycle
 
@@ -23,11 +35,10 @@
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _defaultBackGestureEnabled = NO;
-        _reverseTransitionsForViewControllers = [NSMapTable weakToStrongObjectsMapTable];
+        _nextTransitionsForFromControllers = [NSMapTable weakToStrongObjectsMapTable];
     }
     return self;
 }
@@ -51,20 +62,21 @@
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    STPTransition *transition = [self.reverseTransitionsForViewControllers objectForKey:viewController];
+    [viewController viewDidAppear:animated];
 
-    if (!transition.gestureRecognizer && self.hasDefaultBackGestureEnabled) {
+//    STPTransition *transition = [self.reverseTransitionsForViewControllers objectForKey:viewController];
 
-        UIScreenEdgePanGestureRecognizer *recognizer = [UIScreenEdgePanGestureRecognizer new];
-        recognizer.edges = UIRectEdgeLeft;
-        [navigationController.view addGestureRecognizer:recognizer];
-
-        __weak UINavigationController *weakNavigationController = navigationController;
-        transition.gestureRecognizer = recognizer;
-        transition.onGestureTriggered = ^{
-            [weakNavigationController popViewControllerAnimated:YES];
-        };
-    }
+//    if (!transition.gestureRecognizer && self.hasDefaultBackGestureEnabled) {
+//        UIScreenEdgePanGestureRecognizer *recognizer = [UIScreenEdgePanGestureRecognizer new];
+//        recognizer.edges = UIRectEdgeLeft;
+//        [navigationController.view addGestureRecognizer:recognizer];
+//
+//        __weak UINavigationController *weakNavigationController = navigationController;
+//        transition.gestureRecognizer = recognizer;
+//        transition.onGestureTriggered = ^{
+//            [weakNavigationController popViewControllerAnimated:YES];
+//        };
+//    }
 }
 
 
@@ -91,13 +103,12 @@
     return [self interactorForAnimator:animator];
 }
 
-
 #pragma mark - Internal Methods
 
-- (void)messageViewControllersForOperation:(STPTransitionOperation)operation
-                        fromViewController:(UIViewController *)fromVC
-                          toViewController:(UIViewController *)toVC
-                                transition:(STPTransition *)transition {
+- (void)messageViewControllersAboutOperation:(STPTransitionOperation)operation
+                          fromViewController:(UIViewController *)fromVC
+                            toViewController:(UIViewController *)toVC
+                                  transition:(STPTransition *)transition {
     UIViewController *outerViewController;
     UIViewController *innerViewController;
 
@@ -127,15 +138,13 @@
 - (STPTransitionOperation)transitionOperationForNavigationControllerOperation:(UINavigationControllerOperation)operation {
     STPTransitionOperation transitionOperation;
     switch (operation) {
-        case UINavigationControllerOperationNone:
-            transitionOperation = STPTransitionOperationNone;
-            break;
         case UINavigationControllerOperationPush:
             transitionOperation = STPTransitionOperationPushPresent;
             break;
         case UINavigationControllerOperationPop:
             transitionOperation = STPTransitionOperationPopDismiss;
             break;
+        case UINavigationControllerOperationNone:
         default:
             transitionOperation = STPTransitionOperationNone;
             break;
@@ -144,32 +153,19 @@
 }
 
 - (STPTransition *)transitionFromViewController:(UIViewController *)fromViewController
-                                            toViewController:(UIViewController *)toViewController
-                                              usingOperation:(STPTransitionOperation)operation {
-    STPTransition *transition;
-    if (self.nextTransition) {
-
-        transition = self.nextTransition;
-        self.nextTransition = nil;
-
-    } else if (operation == STPTransitionOperationPopDismiss &&
-               [self.reverseTransitionsForViewControllers objectForKey:fromViewController]) {
-
-        transition = [self.reverseTransitionsForViewControllers objectForKey:fromViewController];
-        if (transition.isReversible) {
-            transition.reverse = YES;
+                               toViewController:(UIViewController *)toViewController
+                                 usingOperation:(STPTransitionOperation)operation {
+    STPTransition *transition = [self.nextTransitionsForFromControllers objectForKey:fromViewController];
+    if (transition) {
+        [self.nextTransitionsForFromControllers removeObjectForKey:fromViewController];
+        if (operation == STPTransitionOperationPopDismiss) {
+            transition.reversed = YES;
         }
 
-    }
-
-    [self messageViewControllersForOperation:operation fromViewController:fromViewController toViewController:toViewController transition:transition];
-
-    if (operation == STPTransitionOperationPushPresent) {
-        if (transition.reverseTransition) {
-            [self.reverseTransitionsForViewControllers setObject:transition.reverseTransition forKey:toViewController];
-        } else if (transition.isReversible) {
-            [self.reverseTransitionsForViewControllers setObject:transition forKey:toViewController];
-        }
+        [self messageViewControllersAboutOperation:operation
+                                fromViewController:fromViewController
+                                  toViewController:toViewController
+                                        transition:transition];
     }
     return transition;
 }

@@ -1,4 +1,4 @@
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @class STPTransition;
 
@@ -7,20 +7,20 @@
 @property (nonatomic, weak) UIViewController *sourceViewController;
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent
-                     animated:(BOOL)flag
-                   completion:(void (^)(void))completion
-              usingTransition:(STPTransition *)transition;
+              usingTransition:(STPTransition *)transition
+                 onCompletion:(void (^)(void))completion;
 
-- (void)dismissViewControllerAnimated:(BOOL)flag
-                           completion:(void (^)(void))completion
-                      usingTransition:(STPTransition *)transition;
+- (void)dismissViewControllerUsingTransition:(STPTransition *)transition
+                                onCompletion:(void (^)(void))completion;
 
 - (void)transitionFromViewController:(UIViewController *)fromViewController
                     toViewController:(UIViewController *)toViewController
                      usingTransition:(STPTransition *)transition;
 
-
+// You can override these methods in your UIViewController subclass to react to a transition.
+// Outer view controller is either lower in the navigation stack, or the presenting controller.
 - (void)willPerformTransitionAsOuterViewController:(STPTransition *)transition;
+// Inner view controller is either higher in the navigation stack, or the presented controller.
 - (void)willPerformTransitionAsInnerViewController:(STPTransition *)transition;
 
 @end

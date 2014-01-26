@@ -1,13 +1,11 @@
-#import <Foundation/Foundation.h>
-
 @class STPTransition;
 
 @interface STPTransitionCenter : NSObject <UINavigationControllerDelegate,
-                                            UIViewControllerTransitioningDelegate>
-
-@property (nonatomic, assign, getter = hasDefaultBackGestureEnabled) BOOL defaultBackGestureEnabled;
-@property (nonatomic, strong) STPTransition *nextTransition;
+                                           UIViewControllerTransitioningDelegate>
 
 + (instancetype)sharedInstance;
+
+- (void)setNextTransition:(STPTransition *)transition
+    forFromViewController:(UIViewController *)controller;
 
 @end
