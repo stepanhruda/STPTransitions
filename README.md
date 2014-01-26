@@ -139,6 +139,6 @@ A: Subclass your delegate from `STPTransitionCenter` and use your own instance i
 
 Created by [Stepan Hruda](twitter.com/stepanhruda), follow me on Twitter for a good time.  
 
-Thanks goes to [Josh Vickery](twitter.com/vickeryj) for contributions and feedback.
+Thanks goes to [Josh Vickery](twitter.com/vickeryj) and [ShopKeep POS](shopkeep.com) for contributions and feedback.
 
 Released under [MIT License](https://github.com/stepanhruda/STPTransitions/blob/master/LICENSE).
