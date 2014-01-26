@@ -98,7 +98,13 @@ To maintain thin view controllers and a nicely separated codebase, you probably 
 // STPTransition subclass example
 ```
 
-### Reversing transitions
+### Reverse transitions
+
+When pushing or presenting a view controller, you can specify which transition should happen when doing the respective returning operation (i.e. pop or dismiss). Simply assign the transition object to `reverseTransition`. This greatly helps decoupling, because the pushed/presented controller doesn't have to know anything about how it's being shown.
+
+_Pro tip:_ Just assign `reverseTransition` to be a new instance of the same class you just created for the push/present. See below on how to easily handle both animations in one class.
+
+### Regular and reverse implementation in one class
 
 Often, you don't want to have two `STPTransition` subclasses for the same type of animation, i.e. one for going forward, and one for going back. When going back – popping or dismissing a controller – the transition instance automatically gets assigned `YES` for `isReversed`.
 
@@ -117,6 +123,8 @@ Note: This does **not** mean the transition is interactive (e.g. follows users f
 3. Optional: Implement `interactiveGesturePercentageCompletionForPoint:` in your subclass.
 
 TODO: more here
+
+Note: An interactive transition doesn't necessarily need to be _triggered_ interactively, e.g. it can be triggered by a button and happen non-interactively. The `wasTriggeredInteractively` property informs about the way it was triggered.
 
 ## Included transitions
 
