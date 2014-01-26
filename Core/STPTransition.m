@@ -19,7 +19,11 @@
 - (void)animateFromView:(UIView *)fromView
                  toView:(UIView *)toView
         inContainerView:(UIView *)containerView
-           onCompletion:(void (^)(BOOL))onCompletion {}
+           onCompletion:(void (^)(BOOL))onCompletion {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Override -animateFromView:toView:inContainerView:onCompletion: in your subclass."
+                                 userInfo:nil];
+}
 
 - (BOOL)wasTriggeredInteractively {
     return self.gestureRecognizer.state != UIGestureRecognizerStatePossible;
@@ -28,7 +32,10 @@
 - (void)gestureDidBegin {}
 
 - (CGFloat)completionPercentageForGestureAtPoint:(CGPoint)point {
-    return (1.3f * point.x) / [UIScreen mainScreen].applicationFrame.size.width;
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"If your transition is interactive, override -completionPercentageForGestureAtPoint:."
+                                 userInfo:nil];
+//    return (1.3f * point.x) / [UIScreen mainScreen].applicationFrame.size.width;
 }
 
 - (void)setGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {

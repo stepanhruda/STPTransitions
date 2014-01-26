@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/stepanhruda/STPTransitions.git", :tag => "0.0.1" }
 
-  s.source_files  = 'Classes', 'Classes/**/*.{h,m}'
+  s.source_files  = 'Core/**/*.{h,m}', 'Bundled Transitions/**/*.{h,m}'
 
   s.requires_arc = true
 

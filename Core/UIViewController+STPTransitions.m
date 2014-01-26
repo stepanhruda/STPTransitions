@@ -105,7 +105,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent
               usingTransition:(STPTransition *)transition
                  onCompletion:(void (^)(void))completion {
-    [STPTransitionCenter.sharedInstance setNextTransition:transition forFromViewController:self];
+    [STPTransitionCenter.sharedInstance setNextPushOrPresentTransition:transition fromViewController:self];
     viewControllerToPresent.sourceViewController = self;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
     viewControllerToPresent.transitioningDelegate = STPTransitionCenter.sharedInstance;
@@ -114,7 +114,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 
 - (void)dismissViewControllerUsingTransition:(STPTransition *)transition
                                 onCompletion:(void (^)(void))completion {
-    [STPTransitionCenter.sharedInstance setNextTransition:transition forFromViewController:self];
+    [STPTransitionCenter.sharedInstance setNextPopOrDismissTransition:transition fromViewController:self];
     [self dismissViewControllerAnimated:YES completion:completion];
 }
 

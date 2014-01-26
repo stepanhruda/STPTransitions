@@ -3,3 +3,6 @@
 #import "STPTransitionCenter.h"
 #import "UINavigationController+STPTransitions.h"
 #import "UIViewController+STPTransitions.h"
+
+#import "STPPushLeftTransition.h"
+#import "STPZoomAndFadeTransition.h"

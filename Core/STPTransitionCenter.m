@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 
 @interface STPTransitionCenter ()
 
-@property (nonatomic, strong) NSMapTable *nextTransitionsForFromControllers;
+@property (nonatomic, strong) NSMapTable *nextTransitionsForOperationsForFromControllers;
 
 @end
 
@@ -19,9 +19,33 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 
 #pragma mark - Public Interface
 
-- (void)setNextTransition:(STPTransition *)transition
-    forFromViewController:(UIViewController *)controller {
-    [self.nextTransitionsForFromControllers setObject:transition forKey:controller];
+
+- (void)setNextPushOrPresentTransition:(STPTransition *)transition
+                    fromViewController:(UIViewController *)viewController {
+    [self setNextTransition:transition
+               forOperation:STPTransitionOperationPushPresent
+         fromViewController:viewController];
+}
+
+- (void)setNextPopOrDismissTransition:(STPTransition *)transition
+                   fromViewController:(UIViewController *)viewController {
+    [self setNextTransition:transition
+               forOperation:STPTransitionOperationPopDismiss
+         fromViewController:viewController];
+}
+
+- (void)removeAllTransitionsForViewController:(UIViewController *)viewController {
+    [self.nextTransitionsForOperationsForFromControllers removeObjectForKey:viewController];
+}
+
+- (STPTransition *)nextPushOrPresentTransitionFromViewController:(UIViewController *)viewController {
+    return [self nextTransitionForOperation:STPTransitionOperationPushPresent
+                         fromViewController:viewController];
+}
+
+- (STPTransition *)nextPopOrDismissTransitionFromViewController:(UIViewController *)viewController {
+    return [self nextTransitionForOperation:STPTransitionOperationPopDismiss
+                         fromViewController:viewController];
 }
 
 #pragma mark - Object Lifecycle
@@ -38,7 +62,7 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _nextTransitionsForFromControllers = [NSMapTable weakToStrongObjectsMapTable];
+        _nextTransitionsForOperationsForFromControllers = [NSMapTable weakToStrongObjectsMapTable];
     }
     return self;
 }
@@ -65,7 +89,7 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
     [viewController viewDidAppear:animated];
 
 //    STPTransition *transition = [self.reverseTransitionsForViewControllers objectForKey:viewController];
-
+//
 //    if (!transition.gestureRecognizer && self.hasDefaultBackGestureEnabled) {
 //        UIScreenEdgePanGestureRecognizer *recognizer = [UIScreenEdgePanGestureRecognizer new];
 //        recognizer.edges = UIRectEdgeLeft;
@@ -126,7 +150,7 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 
 - (id<UIViewControllerInteractiveTransitioning>)interactorForAnimator:(id<UIViewControllerAnimatedTransitioning>)animationController {
     id<UIViewControllerInteractiveTransitioning> transitionToUse;
-    if ([animationController isKindOfClass:[STPTransition class]]) {
+    if ([animationController isKindOfClass:STPTransition.class]) {
         STPTransition *interactiveTransition = (STPTransition *)animationController;
         if (interactiveTransition.wasTriggeredInteractively) {
             transitionToUse = interactiveTransition;
@@ -155,11 +179,17 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 - (STPTransition *)transitionFromViewController:(UIViewController *)fromViewController
                                toViewController:(UIViewController *)toViewController
                                  usingOperation:(STPTransitionOperation)operation {
-    STPTransition *transition = [self.nextTransitionsForFromControllers objectForKey:fromViewController];
+    STPTransition *transition = [self nextTransitionForOperation:operation
+                                              fromViewController:fromViewController];
     if (transition) {
-        [self.nextTransitionsForFromControllers removeObjectForKey:fromViewController];
-        if (operation == STPTransitionOperationPopDismiss) {
-            transition.reversed = YES;
+        if (operation == STPTransitionOperationPushPresent) {
+            [self setNextPopOrDismissTransition:transition fromViewController:toViewController];
+            [self setNextPushOrPresentTransition:nil fromViewController:fromViewController];
+        } else {
+            [self removeAllTransitionsForViewController:fromViewController];
+            if (operation == STPTransitionOperationPopDismiss) {
+                transition.reversed = YES;
+            }
         }
 
         [self messageViewControllersAboutOperation:operation
@@ -167,6 +197,33 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
                                   toViewController:toViewController
                                         transition:transition];
     }
+    return transition;
+}
+
+- (void)setNextTransition:(STPTransition *)transition
+             forOperation:(STPTransitionOperation)operation
+       fromViewController:(UIViewController *)viewController {
+    NSMutableDictionary *transitionsForOperations = [self.nextTransitionsForOperationsForFromControllers objectForKey:viewController];
+    if (!transitionsForOperations && transition) {
+        transitionsForOperations = [NSMutableDictionary dictionary];
+        [self.nextTransitionsForOperationsForFromControllers setObject:transitionsForOperations forKey:viewController];
+    }
+
+    if (transition) {
+        [transitionsForOperations setObject:transition forKey:@(operation)];
+    } else {
+        [transitionsForOperations removeObjectForKey:@(operation)];
+    }
+
+    if (transitionsForOperations.count < 1) {
+        [self removeAllTransitionsForViewController:viewController];
+    }
+}
+
+- (STPTransition *)nextTransitionForOperation:(STPTransitionOperation)operation
+                           fromViewController:(UIViewController *)viewController {
+    NSDictionary *transitionsForOperations = [self.nextTransitionsForOperationsForFromControllers objectForKey:viewController];
+    STPTransition *transition = [transitionsForOperations objectForKey:@(operation)];
     return transition;
 }
 
