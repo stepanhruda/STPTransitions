@@ -1,6 +1,6 @@
 #STPTransitions
 
-> Unified, easy API for custom view controller transitioning.
+> Unified, easy API for custom iOS view controller transitioning.
 
 Perhaps you watched the [2013 WWDC talk](http://asciiwwdc.com/2013/sessions/218) or read the [slightly](https://developer.apple.com/library/ios/documentation/uikit/reference/UIViewControllerAnimatedTransitioning_Protocol/Reference/Reference.html) [spread-out](https://developer.apple.com/library/ios/documentation/uikit/reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instm/UIViewController/transitionFromViewController:toViewController:duration:options:animations:completion:) [documentation](https://developer.apple.com/library/ios/documentation/uikit/reference/UIViewControllerInteractiveTransitioning_protocol/Reference/Reference.html#//apple_ref/occ/intf/UIViewControllerInteractiveTransitioning) on how to use custom transitions between child view controllers, modal view controllers and in a navigation controller. Couple of minutes in, you're wandering in Protocolandia and you're lost. We don't blame you.  
 
@@ -141,4 +141,4 @@ Created by [Stepan Hruda](twitter.com/stepanhruda), follow me on Twitter for a g
 
 Thanks goes to [Josh Vickery](twitter.com/vickeryj) for contributions and feedback.
 
-Released under MIT License.
+Released under [MIT License](https://github.com/stepanhruda/STPTransitions/blob/master/LICENSE).
