@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5C36EA3B-3A60-4EBC-888A-9E8980E20D74</string>
+	<key>IDESourceControlProjectName</key>
+	<string>STPTransitionsExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A57FB449-2552-4FEB-A8DC-5D490E686F1D</key>
+		<string>ssh://github.com/stepanhruda/STPTransitions.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example/STPTransitionsExample/STPTransitionsExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A57FB449-2552-4FEB-A8DC-5D490E686F1D</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/stepanhruda/STPTransitions.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A57FB449-2552-4FEB-A8DC-5D490E686F1D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A57FB449-2552-4FEB-A8DC-5D490E686F1D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>STPTransitionsExample</string>
+		</dict>
+	</array>
+</dict>
+</plist>

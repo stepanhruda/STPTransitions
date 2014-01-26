@@ -83,27 +83,6 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
     return [self interactorForAnimator:animationController];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController
-       didShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated {
-    [viewController viewDidAppear:animated];
-
-//    STPTransition *transition = [self.reverseTransitionsForViewControllers objectForKey:viewController];
-//
-//    if (!transition.gestureRecognizer && self.hasDefaultBackGestureEnabled) {
-//        UIScreenEdgePanGestureRecognizer *recognizer = [UIScreenEdgePanGestureRecognizer new];
-//        recognizer.edges = UIRectEdgeLeft;
-//        [navigationController.view addGestureRecognizer:recognizer];
-//
-//        __weak UINavigationController *weakNavigationController = navigationController;
-//        transition.gestureRecognizer = recognizer;
-//        transition.onGestureTriggered = ^{
-//            [weakNavigationController popViewControllerAnimated:YES];
-//        };
-//    }
-}
-
-
 #pragma mark - UIViewControllerTransitioningDelegate Methods
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented

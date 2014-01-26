@@ -35,7 +35,6 @@
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:@"If your transition is interactive, override -completionPercentageForGestureAtPoint:."
                                  userInfo:nil];
-//    return (1.3f * point.x) / [UIScreen mainScreen].applicationFrame.size.width;
 }
 
 - (void)setGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
@@ -59,7 +58,13 @@
     [self animateFromView:fromVC.view
                    toView:toVC.view
           inContainerView:container
-      executeOnCompletion:^(BOOL finished) { [transitionContext completeTransition:finished]; }];
+      executeOnCompletion:
+     ^(BOOL finished) {
+         BOOL transitionWasCanceled = [transitionContext transitionWasCancelled];
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [transitionContext completeTransition:!transitionWasCanceled];
+         });
+     }];
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {

@@ -50,7 +50,7 @@
 #pragma mark - Gesture Recognition
 
 /**
- Gesture recognizer to trigger the transition via a gesture.
+ Gesture recognizer to trigger the transition via a gesture. You're responsible for adding the recognizer to the appropriate view.
  @discussion Although it is used for interactive transitions, it does _not_ automatically make the transition interactive.
  A regular transition can be kicked off via this recognizer.
  */
