@@ -16,14 +16,14 @@
 @property (nonatomic, assign) CGRect initialToFrame;
 
 - (instancetype)initFromViewController:(UIViewController *)fromViewController
-                          toViewController:(UIViewController *)toViewController;
+                      toViewController:(UIViewController *)toViewController;
 
 @end
 
 @implementation STPViewControllerContextTransitioning
 
 - (instancetype)initFromViewController:(UIViewController *)fromViewController
-                          toViewController:(UIViewController *)toViewController {
+                      toViewController:(UIViewController *)toViewController {
     self = [super init];
     if (self) {
         _fromViewController = fromViewController;
@@ -82,7 +82,6 @@
 }
 
 - (void)cancelInteractiveTransition {
-
 }
 
 - (UIModalPresentationStyle)presentationStyle {
