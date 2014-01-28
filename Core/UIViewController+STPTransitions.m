@@ -105,10 +105,16 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent
               usingTransition:(STPTransition *)transition
                  onCompletion:(void (^)(void))completion {
-    [STPTransitionCenter.sharedInstance setNextPushOrPresentTransition:transition fromViewController:self];
+    if ([self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
+                                     userInfo:nil];
+    }
+    STPTransitionCenter *center = self.transitioningDelegate;
+    [center setNextPushOrPresentTransition:transition fromViewController:self];
     viewControllerToPresent.sourceViewController = self;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
-    viewControllerToPresent.transitioningDelegate = STPTransitionCenter.sharedInstance;
+    viewControllerToPresent.transitioningDelegate = center;
     transition.needsRotationFixForModals = YES;
     transition.reverseTransition.needsRotationFixForModals = YES;
     [self presentViewController:viewControllerToPresent animated:YES completion:completion];
@@ -116,7 +122,13 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 
 - (void)dismissViewControllerUsingTransition:(STPTransition *)transition
                                 onCompletion:(void (^)(void))completion {
-    [STPTransitionCenter.sharedInstance setNextPopOrDismissTransition:transition fromViewController:self];
+    if ([self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
+                                     userInfo:nil];
+    }
+    STPTransitionCenter *center = self.transitioningDelegate;
+    [center setNextPopOrDismissTransition:transition fromViewController:self];
     transition.needsRotationFixForModals = YES;
     [self dismissViewControllerAnimated:YES completion:completion];
 }
