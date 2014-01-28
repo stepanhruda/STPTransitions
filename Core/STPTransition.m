@@ -134,7 +134,7 @@
     toViewController.view.frame = containerView.bounds;
 
     void (^completionFix)(void);
-    if (self.isReversed) {
+    if (self.isReversed && !toViewController.presentingViewController) {
         completionFix = ^{
             toViewController.view.transform = toFinalRotation;
             toViewController.view.frame = toFinalFrame;
