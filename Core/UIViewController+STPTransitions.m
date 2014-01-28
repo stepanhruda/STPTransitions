@@ -141,17 +141,25 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
     [toViewController willPerformTransitionAsInnerViewController:transition];
     [self addChildViewController:toViewController];
 
-    STPViewControllerContextTransitioning *transitioningContext =
-    [[STPViewControllerContextTransitioning alloc] initFromViewController:fromViewController
-                                                         toViewController:toViewController];
-    transitioningContext.containerView = self.view;
     __weak __typeof(self) weakSelf = self;
-    transitioningContext.onCompletion = ^(BOOL finished) {
-        [fromViewController removeFromParentViewController];
+    void (^onCompletion)(BOOL) = ^(BOOL finished) {
         [toViewController didMoveToParentViewController:weakSelf];
+        [fromViewController removeFromParentViewController];
     };
 
-    [transition animateTransition:transitioningContext];
+    if (transition) {
+        STPViewControllerContextTransitioning *transitioningContext =
+        [[STPViewControllerContextTransitioning alloc] initFromViewController:fromViewController
+                                                             toViewController:toViewController];
+        transitioningContext.containerView = self.view;
+        transitioningContext.onCompletion = onCompletion;
+
+        [transition animateTransition:transitioningContext];
+    } else {
+        [self.view addSubview:toViewController.view];
+        [fromViewController.view removeFromSuperview];
+        onCompletion(YES);
+    }
 }
 
 - (void)willPerformTransitionAsInnerViewController:(STPTransition *)transition {}
