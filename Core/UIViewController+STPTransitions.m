@@ -109,12 +109,14 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
     viewControllerToPresent.sourceViewController = self;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
     viewControllerToPresent.transitioningDelegate = STPTransitionCenter.sharedInstance;
+    transition.needsRotationFixForModals = YES;
     [self presentViewController:viewControllerToPresent animated:YES completion:completion];
 }
 
 - (void)dismissViewControllerUsingTransition:(STPTransition *)transition
                                 onCompletion:(void (^)(void))completion {
     [STPTransitionCenter.sharedInstance setNextPopOrDismissTransition:transition fromViewController:self];
+    transition.needsRotationFixForModals = YES;
     [self dismissViewControllerAnimated:YES completion:completion];
 }
 

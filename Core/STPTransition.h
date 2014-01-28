@@ -31,6 +31,14 @@
  */
 @property (nonatomic, copy) void (^onCompletion)(BOOL transitionCompleted);
 
+#pragma mark - Modal Transitions
+
+/**
+ The way custom modal transitions are treated in landscape mode is very strange at the moment.
+ This property is automatically assigned if the transition is used for a modal and STPTransitions does its best to try to fix it for you.
+ */
+@property (nonatomic, assign) BOOL needsRotationFixForModals;
+
 #pragma mark - Reverse Transitions
 
 /**

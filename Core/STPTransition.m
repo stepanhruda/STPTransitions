@@ -52,20 +52,32 @@
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIView *container = [transitionContext containerView];
-    [self animateFromView:fromVC.view
-                   toView:toVC.view
-          inContainerView:container
+    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *containerView = [transitionContext containerView];
+
+    void (^modalPresentationCompletionFix)(void);
+    if (self.needsRotationFixForModals) {
+    modalPresentationCompletionFix = [self fixModalPresentationForFromViewController:fromViewController
+                                                                    toViewController:toViewController
+                                                                   transitionContext:transitionContext];
+    }
+
+    [self animateFromView:fromViewController.view
+                   toView:toViewController.view
+          inContainerView:containerView
       executeOnCompletion:
      ^(BOOL finished) {
          BOOL transitionWasCanceled = [transitionContext transitionWasCancelled];
          dispatch_async(dispatch_get_main_queue(), ^{
              [transitionContext completeTransition:!transitionWasCanceled];
+             if (modalPresentationCompletionFix) {
+                 modalPresentationCompletionFix();
+             }
          });
      }];
 }
+
 
 - (void)animationEnded:(BOOL)transitionCompleted {
     if (self.onCompletion) {
@@ -97,6 +109,39 @@
             [self cancelInteractiveTransition];
         }
     }
+}
+
+- (void (^)(void))fixModalPresentationForFromViewController:(UIViewController *)fromViewController
+                                 toViewController:(UIViewController *)toViewController
+                                transitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
+    UIView *containerView = [transitionContext containerView];
+    CGRect fromInitialFrame = [transitionContext initialFrameForViewController:fromViewController];
+    CGFloat yOffset = - (CGRectGetMaxY(fromInitialFrame));
+    CGRect fromFinalFrame = CGRectOffset(fromInitialFrame, 0.0, yOffset);
+
+    CGAffineTransform toFinalRotation = toViewController.view.transform;
+    CGRect toFinalFrame = [transitionContext finalFrameForViewController:toViewController];
+
+    if (!self.isReversed && !fromViewController.presentingViewController) {
+        containerView.transform = fromViewController.view.transform;
+        containerView.frame = UIApplication.sharedApplication.delegate.window.bounds;
+
+        fromViewController.view.transform = CGAffineTransformIdentity;
+        fromViewController.view.frame = containerView.bounds;
+    }
+
+    toViewController.view.transform = CGAffineTransformIdentity;
+    toViewController.view.frame = containerView.bounds;
+
+    void (^completionFix)(void);
+    if (self.isReversed) {
+        completionFix = ^{
+            toViewController.view.transform = toFinalRotation;
+            toViewController.view.frame = toFinalFrame;
+        };
+    }
+
+    return completionFix;
 }
 
 @end
