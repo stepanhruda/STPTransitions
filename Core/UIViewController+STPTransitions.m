@@ -110,6 +110,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
     viewControllerToPresent.transitioningDelegate = STPTransitionCenter.sharedInstance;
     transition.needsRotationFixForModals = YES;
+    transition.reverseTransition.needsRotationFixForModals = YES;
     [self presentViewController:viewControllerToPresent animated:YES completion:completion];
 }
 
