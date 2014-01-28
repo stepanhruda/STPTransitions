@@ -105,7 +105,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent
               usingTransition:(STPTransition *)transition
                  onCompletion:(void (^)(void))completion {
-    if ([self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
+    if (![self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
                                      userInfo:nil];
@@ -122,7 +122,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 
 - (void)dismissViewControllerUsingTransition:(STPTransition *)transition
                                 onCompletion:(void (^)(void))completion {
-    if ([self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
+    if (![self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
                                      userInfo:nil];
