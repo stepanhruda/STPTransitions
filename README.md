@@ -106,6 +106,11 @@ This greatly helps decoupling, because the pushed/presented controller doesn't h
 
 _Pro tip:_ Just assign `reverseTransition` to be a new instance of the same class you just created for the push/present. See below on how to easily handle both animations in one class.
 
+
+### Modal transitions in landscape orientation
+
+As of iOS 7.0.2, custom modal transitions in landscape orientation are not very usable, because the views iOS gives you have all kinds of messed up frames and transforms. STPTransitions attempts to solve this for you, providing you a view in the orientation you'd expect. This has been tested and works for iPad full-screen landscape custom modals.
+
 ### Regular and reverse implementation in one class
 
 Often, you don't want to have two `STPTransition` subclasses for the same type of animation, i.e. one for going forward, and one for going back. When going back – popping or dismissing a controller – the transition instance automatically gets assigned `YES` for `isReversed`.
