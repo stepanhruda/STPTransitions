@@ -11,7 +11,7 @@ Perhaps you watched the [2013 WWDC talk](http://asciiwwdc.com/2013/sessions/218)
 ## Features (TL;DR)
 
 * Child view controller transitions
-* Modal view controller transitions
+* Modal view controller transitions (+ fix for landscape)
 * Navigation controller transitions
 * Unified, simple API
 
