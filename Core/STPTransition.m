@@ -63,11 +63,17 @@
                                                                    transitionContext:transitionContext];
     }
 
+    [toViewController beginAppearanceTransition:YES animated:YES];
+    [fromViewController beginAppearanceTransition:NO animated:YES];
     [self animateFromView:fromViewController.view
                    toView:toViewController.view
           inContainerView:containerView
       executeOnCompletion:
      ^(BOOL finished) {
+         if (finished) {
+             [toViewController endAppearanceTransition];
+             [fromViewController endAppearanceTransition];
+         }
          BOOL transitionWasCanceled = [transitionContext transitionWasCancelled];
          dispatch_async(dispatch_get_main_queue(), ^{
              [transitionContext completeTransition:!transitionWasCanceled];
