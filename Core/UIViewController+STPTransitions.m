@@ -156,8 +156,8 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 
         [transition animateTransition:transitioningContext];
     } else {
-        [self.view addSubview:toViewController.view];
         [fromViewController.view removeFromSuperview];
+        [self.view addSubview:toViewController.view];
         onCompletion(YES);
     }
 }
