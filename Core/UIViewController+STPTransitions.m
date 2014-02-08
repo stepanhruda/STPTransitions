@@ -110,7 +110,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
                                        reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
                                      userInfo:nil];
     }
-    STPTransitionCenter *center = self.transitioningDelegate;
+    STPTransitionCenter *center = (STPTransitionCenter*)self.transitioningDelegate;
     [center setNextPushOrPresentTransition:transition fromViewController:self];
     viewControllerToPresent.sourceViewController = self;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
@@ -127,7 +127,7 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
                                        reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
                                      userInfo:nil];
     }
-    STPTransitionCenter *center = self.transitioningDelegate;
+    STPTransitionCenter *center = (STPTransitionCenter*)self.transitioningDelegate;
     [center setNextPopOrDismissTransition:transition fromViewController:self];
     transition.needsRotationFixForModals = YES;
     [self dismissViewControllerAnimated:YES completion:completion];
