@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */; };
 		FDCD2E4F1895CE43007BF666 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E4E1895CE43007BF666 /* Foundation.framework */; };
 		FDCD2E511895CE43007BF666 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E501895CE43007BF666 /* CoreGraphics.framework */; };
 		FDCD2E531895CE43007BF666 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E521895CE43007BF666 /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DEAB467A18A6BEFC008FB73D /* STPCardTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCardTransition.h; sourceTree = "<group>"; };
+		DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
 		FDCD2E4B1895CE43007BF666 /* STPTransitionsExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STPTransitionsExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCD2E4E1895CE43007BF666 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDCD2E501895CE43007BF666 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,6 +136,8 @@
 		FDCD2E541895CE43007BF666 /* STPTransitionsExample */ = {
 			isa = PBXGroup;
 			children = (
+				DEAB467A18A6BEFC008FB73D /* STPCardTransition.h */,
+				DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */,
 				FDCD2E5D1895CE43007BF666 /* STPAppDelegate.h */,
 				FDCD2E5E1895CE43007BF666 /* STPAppDelegate.m */,
 				FDCD2E661895CE43007BF666 /* STPFirstViewController.h */,
@@ -297,6 +302,7 @@
 				FDCD2E5F1895CE43007BF666 /* STPAppDelegate.m in Sources */,
 				FDCD2EA61895CFF1007BF666 /* UIViewController+STPTransitions.m in Sources */,
 				FDCD2EAC1895D205007BF666 /* STPSlideUpTransition.m in Sources */,
+				DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */,
 				FDCD2EA41895CFF1007BF666 /* STPTransitionCenter.m in Sources */,
 				FDCD2E5B1895CE43007BF666 /* main.m in Sources */,
 				FDCD2E681895CE43007BF666 /* STPFirstViewController.m in Sources */,
