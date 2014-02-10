@@ -1,6 +1,7 @@
 #import "STPFirstViewController.h"
 
 #import "STPSlideUpTransition.h"
+#import "STPCardTransition.h"
 #import "STPSecondViewController.h"
 #import "STPTransitions.h"
 
@@ -20,9 +21,16 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender {
-    STPSlideUpTransition *transition = [STPSlideUpTransition new];
-    transition.reverseTransition = [STPSlideUpTransition new];
-
+    //uncomment for slide up/down transition
+//    STPSlideUpTransition *transition = [STPSlideUpTransition new];
+//    transition.reverseTransition = [STPSlideUpTransition new];
+    
+    //card transition adapted from Colin Eberhardt's VCTransitionsLibrary
+    STPCardTransition *transition = [STPCardTransition new];
+    transition.reverseTransition = [STPCardTransition new];
+    
+    //contrived example; one probably wouldn't use the card animation behind a nav
+    //bar like this but serves well for demo purposes
     [self.navigationController pushViewController:[STPSecondViewController new]
                                   usingTransition:transition];
 }
