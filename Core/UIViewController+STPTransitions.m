@@ -90,16 +90,22 @@
 
 @end
 
-static void *STPTransitionsSourceController = &STPTransitionsSourceController;
-
 @implementation UIViewController (STPTransitions)
 
 - (void)setSourceViewController:(UIViewController *)sourceViewController {
-    objc_setAssociatedObject(self, STPTransitionsSourceController, sourceViewController, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(sourceViewController), sourceViewController, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (UIViewController *)sourceViewController {
-    return objc_getAssociatedObject(self, STPTransitionsSourceController);
+    return objc_getAssociatedObject(self, @selector(sourceViewController));
+}
+
+- (void)setFixInterfaceOrientationRotation:(BOOL)fixInterfaceOrientationRotation {
+    objc_setAssociatedObject(self, @selector(fixInterfaceOrientationRotation), @(fixInterfaceOrientationRotation), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (BOOL)fixInterfaceOrientationRotation {
+    return [objc_getAssociatedObject(self, @selector(fixInterfaceOrientationRotation)) boolValue];
 }
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent
@@ -166,5 +172,20 @@ static void *STPTransitionsSourceController = &STPTransitionsSourceController;
 
 - (void)willPerformTransitionAsOuterViewController:(STPTransition *)transition {}
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration {
+    if (self.fixInterfaceOrientationRotation) {
+        CGAffineTransform currentSuperviewTransform = self.view.superview.transform;
+        self.view.superview.transform = CGAffineTransformRotate(currentSuperviewTransform, M_PI_2);
+
+        self.view.frame = self.view.superview.bounds;
+        self.view.transform = CGAffineTransformIdentity;
+        [self willAnimateRotationWithFixedOrientationToInterfaceOrientation:toInterfaceOrientation
+                                                                   duration:duration];
+    }
+}
+
+- (void)willAnimateRotationWithFixedOrientationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                                             duration:(NSTimeInterval)duration {}
 
 @end

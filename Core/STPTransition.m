@@ -1,6 +1,7 @@
 #import "STPTransition.h"
 
 #import "STPTransitionCenter.h"
+#import "UIViewController+STPTransitions.h"
 
 @implementation STPTransition
 
@@ -118,8 +119,8 @@
 }
 
 - (void (^)(void))fixModalPresentationForFromViewController:(UIViewController *)fromViewController
-                                 toViewController:(UIViewController *)toViewController
-                                transitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
+                                           toViewController:(UIViewController *)toViewController
+                                          transitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIView *containerView = [transitionContext containerView];
     CGRect fromInitialFrame = [transitionContext initialFrameForViewController:fromViewController];
     CGFloat yOffset = - (CGRectGetMaxY(fromInitialFrame));
@@ -128,12 +129,21 @@
     CGAffineTransform toFinalRotation = toViewController.view.transform;
     CGRect toFinalFrame = [transitionContext finalFrameForViewController:toViewController];
 
-    if (!self.isReversed && !fromViewController.presentingViewController) {
-        containerView.transform = fromViewController.view.transform;
-        containerView.frame = UIApplication.sharedApplication.delegate.window.bounds;
 
-        fromViewController.view.transform = CGAffineTransformIdentity;
-        fromViewController.view.frame = containerView.bounds;
+    if (!self.isReversed) {
+        BOOL fixInterfaceOrientation = fromViewController.fixInterfaceOrientationRotation;
+
+        if (!fromViewController.presentingViewController) {
+            containerView.transform = fromViewController.view.transform;
+            containerView.frame = UIApplication.sharedApplication.delegate.window.bounds;
+
+            fromViewController.view.transform = CGAffineTransformIdentity;
+            fromViewController.view.frame = containerView.bounds;
+
+            fixInterfaceOrientation = YES;
+        }
+
+        toViewController.fixInterfaceOrientationRotation = fixInterfaceOrientation;
     }
 
     toViewController.view.transform = CGAffineTransformIdentity;
