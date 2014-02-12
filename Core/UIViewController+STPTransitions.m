@@ -181,6 +181,7 @@
         while (presentingViewController) {
             if (presentingViewController.fixInterfaceOrientationRotation) {
                 angle += M_PI_2;
+                angle = -angle;
             }
             presentingViewController = presentingViewController.presentingViewController;
         }
