@@ -188,12 +188,7 @@
 
         self.view.frame = self.view.superview.bounds;
         self.view.transform = CGAffineTransformIdentity;
-        [self willAnimateRotationWithFixedOrientationToInterfaceOrientation:toInterfaceOrientation
-                                                                   duration:duration];
     }
 }
-
-- (void)willAnimateRotationWithFixedOrientationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                                             duration:(NSTimeInterval)duration {}
 
 @end
