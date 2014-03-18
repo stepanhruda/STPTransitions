@@ -59,9 +59,9 @@
 
     void (^modalPresentationCompletionFix)(void);
     if (self.needsRotationFixForModals) {
-    modalPresentationCompletionFix = [self fixModalPresentationForFromViewController:fromViewController
-                                                                    toViewController:toViewController
-                                                                   transitionContext:transitionContext];
+        modalPresentationCompletionFix = [self fixModalPresentationForFromViewController:fromViewController
+                                                                        toViewController:toViewController
+                                                                       transitionContext:transitionContext];
     }
 
     [toViewController beginAppearanceTransition:YES animated:YES];
@@ -122,13 +122,8 @@
                                            toViewController:(UIViewController *)toViewController
                                           transitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIView *containerView = [transitionContext containerView];
-    CGRect fromInitialFrame = [transitionContext initialFrameForViewController:fromViewController];
-    CGFloat yOffset = - (CGRectGetMaxY(fromInitialFrame));
-    CGRect fromFinalFrame = CGRectOffset(fromInitialFrame, 0.0, yOffset);
-
     CGAffineTransform toFinalRotation = toViewController.view.transform;
     CGRect toFinalFrame = [transitionContext finalFrameForViewController:toViewController];
-
 
     if (!self.isReversed) {
         BOOL fixInterfaceOrientation = fromViewController.fixInterfaceOrientationRotation;
@@ -150,13 +145,20 @@
     toViewController.view.frame = containerView.bounds;
 
     void (^completionFix)(void);
-    if (self.isReversed && !toViewController.presentingViewController) {
-        completionFix = ^{
-            toViewController.view.transform = toFinalRotation;
-            toViewController.view.frame = toFinalFrame;
-        };
+    if (self.isReversed) {
+        if (!toViewController.presentingViewController) {
+            completionFix = ^{
+                toViewController.view.transform = toFinalRotation;
+                toViewController.view.frame = toFinalFrame;
+            };
+        } else {
+            completionFix = ^{
+                CGFloat angle = atan2(containerView.transform.b, containerView.transform.a);
+                toViewController.view.superview.transform = CGAffineTransformRotate(toViewController.view.superview.transform, angle);
+            };
+        }
     }
-
+    
     return completionFix;
 }
 

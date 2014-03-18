@@ -175,17 +175,16 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration {
     if (self.fixInterfaceOrientationRotation) {
-        CGAffineTransform currentSuperviewTransform = self.view.superview.transform;
-        CGFloat angle = M_PI_2;
+        NSInteger numberOfCalls = 1;
         UIViewController *presentingViewController = self.presentingViewController;
         while (presentingViewController) {
-            if (presentingViewController.fixInterfaceOrientationRotation) {
-                angle += M_PI_2;
-                angle = -angle;
-            }
+            numberOfCalls++;
             presentingViewController = presentingViewController.presentingViewController;
         }
-        self.view.superview.transform = CGAffineTransformRotate(currentSuperviewTransform, angle);
+
+        CGFloat angle = M_PI / (CGFloat)numberOfCalls;
+
+        self.view.superview.transform = CGAffineTransformRotate(self.view.superview.transform, angle);
 
         self.view.frame = self.view.superview.bounds;
         self.view.transform = CGAffineTransformIdentity;
