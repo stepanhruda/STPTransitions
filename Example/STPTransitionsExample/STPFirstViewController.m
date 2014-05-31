@@ -21,18 +21,46 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender {
-    //uncomment for slide up/down transition
-//    STPSlideUpTransition *transition = [STPSlideUpTransition new];
-//    transition.reverseTransition = [STPSlideUpTransition new];
-    
-    //card transition adapted from Colin Eberhardt's VCTransitionsLibrary
-    STPCardTransition *transition = [STPCardTransition new];
-    transition.reverseTransition = [STPCardTransition new];
-    
-    //contrived example; one probably wouldn't use the card animation behind a nav
-    //bar like this but serves well for demo purposes
-    [self.navigationController pushViewController:[STPSecondViewController new]
+    STPSlideUpTransition *transition = [STPSlideUpTransition new];
+
+    STPSecondViewController *secondViewController = [STPSecondViewController new];
+
+    UIGestureRecognizer *recognizer = [self addGestureRecognizerToView:secondViewController.view];
+
+    STPTransition *reverseInteractiveTransition = [self interactiveTransitionWithGestureRecognizer:recognizer];
+    transition.reverseTransition = reverseInteractiveTransition;
+
+    [self.navigationController pushViewController:secondViewController
                                   usingTransition:transition];
+}
+
+
+- (UIGestureRecognizer *)addGestureRecognizerToView:(UIView *)view {
+    UIScreenEdgePanGestureRecognizer *recognizer = [UIScreenEdgePanGestureRecognizer new];
+    recognizer.edges = UIRectEdgeLeft;
+    [view addGestureRecognizer:recognizer];
+    return recognizer;
+}
+
+- (STPTransition *)interactiveTransitionWithGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
+    STPTransition *transition = [STPSlideUpTransition new];
+    transition.gestureRecognizer = gestureRecognizer;
+
+    __weak __typeof(self) weakSelf = self;
+    transition.onGestureTriggered = ^(UIGestureRecognizer *recognizer) {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+    transition.shouldCompleteTransitionOnGestureEnded = ^BOOL (UIGestureRecognizer *recognizer, CGFloat completion) {
+        return completion > 0.4f;
+    };
+    transition.completionPercentageForGestureRecognizerState = ^CGFloat (UIGestureRecognizer *recognizer) {
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        CGPoint point = [recognizer locationInView:window];
+        CGFloat windowWidth = CGRectGetWidth(window.frame);
+        return point.x / (windowWidth / 1.5f);
+    };
+
+    return transition;
 }
 
 @end

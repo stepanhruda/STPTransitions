@@ -25,9 +25,10 @@
                          fromView.transform =
                          CGAffineTransformMakeTranslation(0.0f, (self.isReversed ? 1 : -1) * CGRectGetHeight(containerView.frame));
                      } completion:^(BOOL finished) {
-                         [fromView removeFromSuperview];
                          fromView.transform = CGAffineTransformIdentity;
+                         toView.transform = CGAffineTransformIdentity;
                          onCompletion(finished);
                      }];
 }
+
 @end

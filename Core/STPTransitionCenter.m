@@ -167,7 +167,6 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
                 [self setNextPopOrDismissTransition:transition.reverseTransition fromViewController:toViewController];
             }
         } else {
-            [self removeAllTransitionsForViewController:fromViewController];
             if (operation == STPTransitionOperationPopDismiss) {
                 transition.reversed = YES;
             }

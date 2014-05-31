@@ -5,16 +5,6 @@
 
 @implementation STPTransition
 
-#pragma mark - Object Lifecycle
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _minimumGestureCompletionPercentageRequiredToFinish = 0.4f;
-    }
-    return self;
-}
-
 #pragma mark - Public Interface
 
 - (void)animateFromView:(UIView *)fromView
@@ -28,14 +18,6 @@
 
 - (BOOL)wasTriggeredInteractively {
     return self.gestureRecognizer.state != UIGestureRecognizerStatePossible;
-}
-
-- (void)gestureDidBegin {}
-
-- (CGFloat)completionPercentageForGestureAtPoint:(CGPoint)point {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"If your transition is interactive, override -completionPercentageForGestureAtPoint:."
-                                 userInfo:nil];
 }
 
 - (void)setGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
@@ -71,13 +53,16 @@
           inContainerView:containerView
       executeOnCompletion:
      ^(BOOL finished) {
-         if (finished) {
-             [toViewController endAppearanceTransition];
-             [fromViewController endAppearanceTransition];
-         }
-         BOOL transitionWasCanceled = [transitionContext transitionWasCancelled];
+         BOOL wasCanceled = [transitionContext transitionWasCancelled];
          dispatch_async(dispatch_get_main_queue(), ^{
-             [transitionContext completeTransition:!transitionWasCanceled];
+             if (!wasCanceled) {
+                 [fromViewController.view removeFromSuperview];
+                 [toViewController endAppearanceTransition];
+                 [fromViewController endAppearanceTransition];
+             } else {
+                 [toViewController.view removeFromSuperview];
+             }
+             [transitionContext completeTransition:!wasCanceled];
              if (modalPresentationCompletionFix) {
                  modalPresentationCompletionFix();
              }
@@ -96,18 +81,14 @@
 
 - (void)handleGestureRecognizer:(UIGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        if (!self.isInteractive) {
-            self.gestureRecognizer = nil;
-        }
-        [self gestureDidBegin];
+        self.onGestureTriggered(recognizer);
     } else {
-        CGPoint locationInView = [recognizer locationInView:recognizer.view];
-        CGFloat completion = [self completionPercentageForGestureAtPoint:locationInView];
+        CGFloat completion = self.completionPercentageForGestureRecognizerState(recognizer);
 
         if (recognizer.state == UIGestureRecognizerStateChanged) {
             [self updateInteractiveTransition:completion];
         } else if (recognizer.state == UIGestureRecognizerStateEnded) {
-            if (completion >= self.minimumGestureCompletionPercentageRequiredToFinish) {
+            if (self.shouldCompleteTransitionOnGestureEnded(recognizer, completion)) {
                 [self finishInteractiveTransition];
             } else {
                 [self cancelInteractiveTransition];

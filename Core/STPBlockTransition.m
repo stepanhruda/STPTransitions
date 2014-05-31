@@ -27,26 +27,4 @@
     }
 }
 
-- (void)gestureDidBegin {
-    if (self.onGestureDidBegin) {
-        self.onGestureDidBegin();
-    }
-}
-
-- (void)interactiveGestureChanged:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.onRecognizedInteractiveGestureChanged) {
-        self.onRecognizedInteractiveGestureChanged(gestureRecognizer);
-    }
-}
-
-- (CGFloat)completionPercentageForGestureAtPoint:(CGPoint)point {
-    CGFloat completionPercentage;
-    if (self.gestureCompletionForPoint) {
-        completionPercentage = self.gestureCompletionForPoint(point);
-    } else {
-        completionPercentage = [super completionPercentageForGestureAtPoint:point];
-    }
-    return completionPercentage;
-}
-
 @end
