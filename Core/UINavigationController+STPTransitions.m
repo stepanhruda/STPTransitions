@@ -7,9 +7,7 @@
 - (void)pushViewController:(UIViewController *)viewController
            usingTransition:(STPTransition *)transition {
     if (![self.delegate isKindOfClass:STPTransitionCenter.class]) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"The navigation controller's delegate has to be a instance of STPTransitionCenter."
-                                     userInfo:nil];
+        self.delegate = STPTransitionCenter.sharedInstance;
     }
     STPTransitionCenter *center = (STPTransitionCenter *)self.delegate;
     [center setNextPushOrPresentTransition:transition fromViewController:self.topViewController];
@@ -18,9 +16,7 @@
 
 - (UIViewController *)popViewControllerUsingTransition:(STPTransition *)transition {
     if (![self.delegate isKindOfClass:STPTransitionCenter.class]) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"The navigation controller's delegate has to be a instance of STPTransitionCenter."
-                                     userInfo:nil];
+        self.delegate = STPTransitionCenter.sharedInstance;
     }
     STPTransitionCenter *center = (STPTransitionCenter *)self.delegate;
     [center setNextPopOrDismissTransition:transition fromViewController:self.topViewController];

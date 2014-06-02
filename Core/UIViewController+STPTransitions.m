@@ -112,9 +112,7 @@
               usingTransition:(STPTransition *)transition
                  onCompletion:(void (^)(void))completion {
     if (![self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
-                                     userInfo:nil];
+        self.transitioningDelegate = STPTransitionCenter.sharedInstance;
     }
     STPTransitionCenter *center = (STPTransitionCenter *)self.transitioningDelegate;
     [center setNextPushOrPresentTransition:transition fromViewController:self];
@@ -129,9 +127,7 @@
 - (void)dismissViewControllerUsingTransition:(STPTransition *)transition
                                 onCompletion:(void (^)(void))completion {
     if (![self.transitioningDelegate isKindOfClass:STPTransitionCenter.class]) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"The view controller's transitioning delegate has to be an instance of STPTransitionCenter."
-                                     userInfo:nil];
+        self.transitioningDelegate = STPTransitionCenter.sharedInstance;
     }
     STPTransitionCenter *center = (STPTransitionCenter *)self.transitioningDelegate;
     [center setNextPopOrDismissTransition:transition fromViewController:self];
