@@ -27,9 +27,11 @@
 
 /**
  *  Completion block executed when the transition is finished.
- *  @param transitionCompleted Is NO if transition's original view is still showing.
+ *
+ *  @param transition The transition that got completed, so you don't have to get a weak reference to it.
+ *  @param transitionCompleted Is NO if the transition was cancelled and its original view is still showing.
  */
-@property (nonatomic, copy) void (^onCompletion)(BOOL transitionCompleted);
+@property (nonatomic, copy) void (^onCompletion)(STPTransition *transition, BOOL transitionCompleted);
 
 #pragma mark - Modal Transitions
 
@@ -58,16 +60,11 @@
 #pragma mark - Interactive Transitions
 
 /**
- *  Gesture recognizer to trigger the transition via a gesture. You're responsible for adding the recognizer to the appropriate view.
- */
-@property (nonatomic, strong) UIGestureRecognizer *gestureRecognizer;
-
-/**
  *  Gets called when the gesture recognizer begins.
  *
  *  Typically, you want to push/pop/present/dismiss/switch in this block.
  */
-@property (nonatomic, copy) void (^onGestureTriggered)(UIGestureRecognizer *recognizer);
+@property (nonatomic, copy) void (^onGestureTriggered)(STPTransition *transition, UIGestureRecognizer *recognizer);
 
 /**
  *  A block asking for the completion percentage for the current state of the transition.
@@ -89,5 +86,12 @@
  *  @discussion Even a transition with a gesture recognizer can be triggered non-interactively (e.g. using a button instead of a gesture).
  */
 @property (nonatomic, readonly) BOOL wasTriggeredInteractively;
+
+
+/**
+ *  Gesture recognizer to trigger the transition via a gesture. You're responsible for adding the recognizer to the appropriate view.
+ */
+@property (nonatomic, weak) UIGestureRecognizer *gestureRecognizer;
+
 
 @end

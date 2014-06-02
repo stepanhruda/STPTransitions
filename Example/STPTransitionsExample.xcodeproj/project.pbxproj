@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */; };
+		FD7B4CCE193AA24D002DFC6E /* STPRotateFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7B4CCD193AA24D002DFC6E /* STPRotateFadeTransition.m */; };
+		FD7B4CD1193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7B4CD0193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m */; };
 		FDCD2E4F1895CE43007BF666 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E4E1895CE43007BF666 /* Foundation.framework */; };
 		FDCD2E511895CE43007BF666 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E501895CE43007BF666 /* CoreGraphics.framework */; };
 		FDCD2E531895CE43007BF666 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCD2E521895CE43007BF666 /* UIKit.framework */; };
@@ -43,6 +45,10 @@
 /* Begin PBXFileReference section */
 		DEAB467A18A6BEFC008FB73D /* STPCardTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCardTransition.h; sourceTree = "<group>"; };
 		DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
+		FD7B4CCC193AA24D002DFC6E /* STPRotateFadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPRotateFadeTransition.h; sourceTree = "<group>"; };
+		FD7B4CCD193AA24D002DFC6E /* STPRotateFadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPRotateFadeTransition.m; sourceTree = "<group>"; };
+		FD7B4CCF193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+STPTransition.h"; sourceTree = "<group>"; };
+		FD7B4CD0193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+STPTransition.m"; sourceTree = "<group>"; };
 		FDCD2E4B1895CE43007BF666 /* STPTransitionsExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STPTransitionsExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCD2E4E1895CE43007BF666 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDCD2E501895CE43007BF666 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -146,6 +152,8 @@
 				FDCD2EA81895D1D2007BF666 /* STPSecondViewController.m */,
 				FDCD2EAA1895D205007BF666 /* STPSlideUpTransition.h */,
 				FDCD2EAB1895D205007BF666 /* STPSlideUpTransition.m */,
+				FD7B4CCC193AA24D002DFC6E /* STPRotateFadeTransition.h */,
+				FD7B4CCD193AA24D002DFC6E /* STPRotateFadeTransition.m */,
 				FDCD2E691895CE43007BF666 /* Images.xcassets */,
 				FDCD2E551895CE43007BF666 /* Supporting Files */,
 			);
@@ -191,6 +199,8 @@
 				FDCD2E9B1895CFF1007BF666 /* STPTransitionCenter.h */,
 				FDCD2E9C1895CFF1007BF666 /* STPTransitionCenter.m */,
 				FDCD2E9D1895CFF1007BF666 /* STPTransitions.h */,
+				FD7B4CCF193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.h */,
+				FD7B4CD0193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m */,
 				FDCD2E9E1895CFF1007BF666 /* UINavigationController+STPTransitions.h */,
 				FDCD2E9F1895CFF1007BF666 /* UINavigationController+STPTransitions.m */,
 				FDCD2EA01895CFF1007BF666 /* UIViewController+STPTransitions.h */,
@@ -298,9 +308,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDCD2EA31895CFF1007BF666 /* STPTransition.m in Sources */,
+				FD7B4CCE193AA24D002DFC6E /* STPRotateFadeTransition.m in Sources */,
 				FDCD2EA21895CFF1007BF666 /* STPBlockTransition.m in Sources */,
 				FDCD2E5F1895CE43007BF666 /* STPAppDelegate.m in Sources */,
 				FDCD2EA61895CFF1007BF666 /* UIViewController+STPTransitions.m in Sources */,
+				FD7B4CD1193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m in Sources */,
 				FDCD2EAC1895D205007BF666 /* STPSlideUpTransition.m in Sources */,
 				DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */,
 				FDCD2EA41895CFF1007BF666 /* STPTransitionCenter.m in Sources */,

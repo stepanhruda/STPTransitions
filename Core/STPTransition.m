@@ -5,6 +5,12 @@
 
 @implementation STPTransition
 
+#pragma mark - Object Lifecycle
+
+- (void)dealloc {
+    self.gestureRecognizer = nil;
+}
+
 #pragma mark - Public Interface
 
 - (void)animateFromView:(UIView *)fromView
@@ -54,14 +60,16 @@
       executeOnCompletion:
      ^(BOOL finished) {
          BOOL wasCanceled = [transitionContext transitionWasCancelled];
+         if (!wasCanceled) {
+             [self.gestureRecognizer.view removeGestureRecognizer:self.gestureRecognizer];
+             self.gestureRecognizer = nil;
+             [fromViewController.view removeFromSuperview];
+             [toViewController endAppearanceTransition];
+             [fromViewController endAppearanceTransition];
+         } else {
+             [toViewController.view removeFromSuperview];
+         }
          dispatch_async(dispatch_get_main_queue(), ^{
-             if (!wasCanceled) {
-                 [fromViewController.view removeFromSuperview];
-                 [toViewController endAppearanceTransition];
-                 [fromViewController endAppearanceTransition];
-             } else {
-                 [toViewController.view removeFromSuperview];
-             }
              [transitionContext completeTransition:!wasCanceled];
              if (modalPresentationCompletionFix) {
                  modalPresentationCompletionFix();
@@ -73,7 +81,7 @@
 
 - (void)animationEnded:(BOOL)transitionCompleted {
     if (self.onCompletion) {
-        self.onCompletion(transitionCompleted);
+        self.onCompletion(self, transitionCompleted);
     }
 }
 
@@ -81,9 +89,10 @@
 
 - (void)handleGestureRecognizer:(UIGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        self.onGestureTriggered(recognizer);
+        self.onGestureTriggered(self, recognizer);
     } else {
-        CGFloat completion = self.completionPercentageForGestureRecognizerState(recognizer);
+        CGFloat completion = MAX(self
+        .completionPercentageForGestureRecognizerState(recognizer), 0);
 
         if (recognizer.state == UIGestureRecognizerStateChanged) {
             [self updateInteractiveTransition:completion];
