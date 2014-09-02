@@ -147,6 +147,9 @@
     void (^onCompletion)(BOOL) = ^(BOOL finished) {
         [toViewController didMoveToParentViewController:weakSelf];
         [fromViewController removeFromParentViewController];
+        if (transition.onCompletion) {
+            transition.onCompletion(transition, YES);
+        }
     };
 
     if (transition) {
