@@ -93,5 +93,14 @@
  */
 @property (nonatomic, weak) UIGestureRecognizer *gestureRecognizer;
 
+/**
+ *  View controller that this transition is from. This property becomes available during the transiton.
+ */
+@property (nonatomic, weak, readonly) UIViewController *fromViewController;
+
+/**
+ *  View controller that this transition is to. This property becomes available during the transiton.
+ */
+@property (nonatomic, weak, readonly) UIViewController *toViewController;
 
 @end

@@ -3,6 +3,13 @@
 #import "STPTransitionCenter.h"
 #import "UIViewController+STPTransitions.h"
 
+@interface STPTransition ()
+
+@property (nonatomic, weak) UIViewController *fromViewController;
+@property (nonatomic, weak) UIViewController *toViewController;
+
+@end
+
 @implementation STPTransition
 
 #pragma mark - Object Lifecycle
@@ -43,6 +50,8 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    self.fromViewController = fromViewController;
+    self.toViewController = toViewController;
     UIView *containerView = [transitionContext containerView];
 
     void (^modalPresentationCompletionFix)(void);
