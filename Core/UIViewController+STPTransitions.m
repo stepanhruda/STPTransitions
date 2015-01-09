@@ -119,8 +119,12 @@
     viewControllerToPresent.sourceViewController = self;
     viewControllerToPresent.modalPresentationStyle = UIModalPresentationCustom;
     viewControllerToPresent.transitioningDelegate = center;
-    transition.needsRotationFixForModals = YES;
-    transition.reverseTransition.needsRotationFixForModals = YES;
+
+    if (self.isUsingIOS7) {
+        transition.needsRotationFixForModals = YES;
+        transition.reverseTransition.needsRotationFixForModals = YES;
+    }
+
     [self presentViewController:viewControllerToPresent animated:YES completion:completion];
 }
 
@@ -188,6 +192,20 @@
         self.view.frame = self.view.superview.bounds;
         self.view.transform = CGAffineTransformIdentity;
     }
+}
+
+#pragma mark - Internal Methods
+
+- (BOOL)isUsingIOS7 {
+    BOOL result = NO;
+    NSArray *decomposedOSVersion = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    NSUInteger majorIOSVersion = [decomposedOSVersion.firstObject integerValue];
+
+    if (majorIOSVersion == 7) {
+        result = YES;
+    }
+
+    return result;
 }
 
 @end
