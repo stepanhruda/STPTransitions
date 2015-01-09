@@ -1,5 +1,6 @@
 #import "STPTransitionCenter.h"
 
+#import "STPPresentationController.h"
 #import "STPTransition.h"
 #import "UIViewController+STPTransitions.h"
 
@@ -104,6 +105,12 @@ typedef NS_ENUM(NSUInteger, STPTransitionOperation) {
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
     return [self interactorForAnimator:animator];
+}
+
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
+                                                      presentingViewController:(UIViewController *)presenting
+                                                          sourceViewController:(UIViewController *)source {
+    return [[STPPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
 }
 
 #pragma mark - Internal Methods
