@@ -69,21 +69,30 @@
       executeOnCompletion:
      ^(BOOL finished) {
          BOOL wasCanceled = [transitionContext transitionWasCancelled];
-         if (!wasCanceled) {
-             [self.gestureRecognizer.view removeGestureRecognizer:self.gestureRecognizer];
-             self.gestureRecognizer = nil;
-             [fromViewController.view removeFromSuperview];
-             [toViewController endAppearanceTransition];
-             [fromViewController endAppearanceTransition];
-         } else {
-             [toViewController.view removeFromSuperview];
-         }
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [transitionContext completeTransition:!wasCanceled];
-             if (modalPresentationCompletionFix) {
-                 modalPresentationCompletionFix();
+         if (finished) {
+             void (^animationCompletionBlock)() = ^{
+                 if (!wasCanceled) {
+                     [self.gestureRecognizer.view removeGestureRecognizer:self.gestureRecognizer];
+                     self.gestureRecognizer = nil;
+                     [fromViewController.view removeFromSuperview];
+                     [toViewController endAppearanceTransition];
+                     [fromViewController endAppearanceTransition];
+                 } else {
+                     [toViewController.view removeFromSuperview];
+                 }
+                 [transitionContext completeTransition:!wasCanceled];
+                 if (modalPresentationCompletionFix) {
+                     modalPresentationCompletionFix();
+                 }
+             };
+             if ([NSThread mainThread] == [NSThread currentThread]) {
+                 animationCompletionBlock();
+             } else {
+                 dispatch_sync(dispatch_get_main_queue(), ^{
+                    animationCompletionBlock();
+                 });
              }
-         });
+         }
      }];
 }
 
@@ -157,7 +166,7 @@
             };
         }
     }
-    
+
     return completionFix;
 }
 
