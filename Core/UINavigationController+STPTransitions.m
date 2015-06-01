@@ -16,7 +16,7 @@
 
 
 - (void)popToViewController:(UIViewController*)viewController
-           usingTransition:(STPTransition *)transition {
+            usingTransition:(STPTransition *)transition {
     if (![self.delegate isKindOfClass:STPTransitionCenter.class]) {
         self.delegate = STPTransitionCenter.sharedInstance;
     }
