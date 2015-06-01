@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C08606041B1D17F700FA0A99 /* STPPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C08606031B1D17F700FA0A99 /* STPPresentationController.m */; };
 		DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */; };
 		FD7B4CCE193AA24D002DFC6E /* STPRotateFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7B4CCD193AA24D002DFC6E /* STPRotateFadeTransition.m */; };
 		FD7B4CD1193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7B4CD0193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C08606021B1D17F700FA0A99 /* STPPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPPresentationController.h; sourceTree = "<group>"; };
+		C08606031B1D17F700FA0A99 /* STPPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPPresentationController.m; sourceTree = "<group>"; };
 		DEAB467A18A6BEFC008FB73D /* STPCardTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCardTransition.h; sourceTree = "<group>"; };
 		DEAB467B18A6BEFC008FB73D /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
 		FD7B4CCC193AA24D002DFC6E /* STPRotateFadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPRotateFadeTransition.h; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 			children = (
 				FDCD2E971895CFF1007BF666 /* STPBlockTransition.h */,
 				FDCD2E981895CFF1007BF666 /* STPBlockTransition.m */,
+				C08606021B1D17F700FA0A99 /* STPPresentationController.h */,
+				C08606031B1D17F700FA0A99 /* STPPresentationController.m */,
 				FDCD2E991895CFF1007BF666 /* STPTransition.h */,
 				FDCD2E9A1895CFF1007BF666 /* STPTransition.m */,
 				FDCD2E9B1895CFF1007BF666 /* STPTransitionCenter.h */,
@@ -255,7 +260,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = STP;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Stepan Hruda";
 				TargetAttributes = {
 					FDCD2E6E1895CE43007BF666 = {
@@ -312,6 +317,7 @@
 				FDCD2EA21895CFF1007BF666 /* STPBlockTransition.m in Sources */,
 				FDCD2E5F1895CE43007BF666 /* STPAppDelegate.m in Sources */,
 				FDCD2EA61895CFF1007BF666 /* UIViewController+STPTransitions.m in Sources */,
+				C08606041B1D17F700FA0A99 /* STPPresentationController.m in Sources */,
 				FD7B4CD1193BE6B8002DFC6E /* UIGestureRecognizer+STPTransition.m in Sources */,
 				FDCD2EAC1895D205007BF666 /* STPSlideUpTransition.m in Sources */,
 				DEAB467C18A6BEFC008FB73D /* STPCardTransition.m in Sources */,
@@ -365,7 +371,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -405,7 +410,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -466,7 +470,6 @@
 		FDCD2E841895CE43007BF666 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/STPTransitionsExample.app/STPTransitionsExample";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -489,7 +492,6 @@
 		FDCD2E851895CE43007BF666 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/STPTransitionsExample.app/STPTransitionsExample";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
