@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "STPTransitions"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Unified, easy API for custom iOS view controller transitioning."
 
   s.homepage     = "http://github.com/stepanhruda/STPTransitions"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '7.0'
 
-  s.source       = { :git => "https://github.com/stepanhruda/STPTransitions.git", :tag => "0.0.3" }
+  s.source       = { :git => "https://github.com/stepanhruda/STPTransitions.git", :tag => "0.0.4" }
 
   s.source_files  = 'Core/**/*.{h,m}'
 
