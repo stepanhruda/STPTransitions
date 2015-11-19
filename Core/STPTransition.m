@@ -52,6 +52,7 @@
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     self.fromViewController = fromViewController;
     self.toViewController = toViewController;
+    self.toViewController.view.frame = [transitionContext finalFrameForViewController:self.toViewController];
     UIView *containerView = [transitionContext containerView];
 
     void (^modalPresentationCompletionFix)(void);
