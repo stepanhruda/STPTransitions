@@ -19,9 +19,13 @@
                      usingTransition:(STPTransition *)transition;
 
 // You can override these methods in your UIViewController subclass to react to a transition.
+
 // Outer view controller is either lower in the navigation stack, or the presenting controller.
 - (void)willPerformTransitionAsOuterViewController:(STPTransition *)transition;
+- (void)didPerformTransitionAsOuterViewController:(STPTransition *)transition;
+
 // Inner view controller is either higher in the navigation stack, or the presented controller.
 - (void)willPerformTransitionAsInnerViewController:(STPTransition *)transition;
+- (void)didPerformTransitionAsInnerViewController:(STPTransition *)transition;
 
 @end
