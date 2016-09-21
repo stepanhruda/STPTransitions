@@ -154,6 +154,8 @@
         if (transition.onCompletion) {
             transition.onCompletion(transition, YES);
         }
+        [fromViewController didPerformTransitionAsOuterViewController:transition];
+        [toViewController didPerformTransitionAsInnerViewController:transition];
     };
 
     if (transition) {
@@ -172,8 +174,10 @@
 }
 
 - (void)willPerformTransitionAsInnerViewController:(STPTransition *)transition {}
+- (void)didPerformTransitionAsInnerViewController:(STPTransition *)transition {}
 
 - (void)willPerformTransitionAsOuterViewController:(STPTransition *)transition {}
+- (void)didPerformTransitionAsOuterViewController:(STPTransition *)transition {}
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration {
